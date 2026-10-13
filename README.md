@@ -1,6 +1,26 @@
 # Razer Synapse Web Hypershift Unlocker
 
+<p align="center">
+  <img src="screenshots/01-hypershift-mapping.jpg" alt="Hypershift Mapping Unlocker showing controls for a Razer keyboard and mouse" width="800">
+</p>
+
+[![Install from Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Install-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/ndgdpnegngmfmlilocjefojfllclikhc)
+
+[![Validate extension](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/actions/workflows/ci.yml)
+[![Publish extension](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/actions/workflows/publish.yml)
+[![Latest release](https://img.shields.io/github/v/release/Almo7aya/razer-synapse-web-hypershift-unlocker)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+[![Chrome 120+](https://img.shields.io/badge/Chrome-120%2B-4285F4?logo=googlechrome&logoColor=white)](extension/manifest.json)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-34A853)](extension/manifest.json)
+[![Release downloads](https://img.shields.io/github/downloads/Almo7aya/razer-synapse-web-hypershift-unlocker/total?label=release%20downloads)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/releases)
+
+[![Stars](https://img.shields.io/github/stars/Almo7aya/razer-synapse-web-hypershift-unlocker?style=flat)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/stargazers)
+[![Forks](https://img.shields.io/github/forks/Almo7aya/razer-synapse-web-hypershift-unlocker?style=flat)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/forks)
+[![Open issues](https://img.shields.io/github/issues/Almo7aya/razer-synapse-web-hypershift-unlocker)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/issues)
+[![Open pull requests](https://img.shields.io/github/issues-pr/Almo7aya/razer-synapse-web-hypershift-unlocker)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/pulls)
+[![Contributors](https://img.shields.io/github/contributors/Almo7aya/razer-synapse-web-hypershift-unlocker)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/graphs/contributors)
+[![Last commit](https://img.shields.io/github/last-commit/Almo7aya/razer-synapse-web-hypershift-unlocker/main)](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/commits/main)
 
 A Chrome extension that unlocks restricted Hypershift mappings in
 [Razer Synapse Web](https://synapse.razer.com/dashboard).
