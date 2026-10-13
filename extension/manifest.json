@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Hypershift Mapping Unlocker",
   "short_name": "Hypershift Unlocker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unlock more Hypershift mappings in Razer Synapse Web.",
   "minimum_chrome_version": "120",
   "homepage_url": "https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker",

@@ -1,6 +1,6 @@
 {
   "name": "razer-synapse-web-hypershift-unlocker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Automatically discover Razer Synapse Web products and unlock their Hypershift mapping flags.",
   "type": "module",
