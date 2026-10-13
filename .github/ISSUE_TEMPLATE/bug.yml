@@ -1,0 +1,32 @@
+name: Bug report
+description: Report a problem with the extension or popup.
+title: "[Bug] "
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Extension and browser versions
+    validations:
+      required: true
+  - type: input
+    id: product
+    attributes:
+      label: Razer product name, if applicable
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the page and actions that trigger the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional details
+      description: Optional screenshots or console messages. Remove account details and device serial numbers; do not attach saved webpages or browser profiles.

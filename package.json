@@ -1,0 +1,25 @@
+{
+  "name": "razer-synapse-web-hypershift-unlocker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Automatically discover Razer Synapse Web products and unlock their Hypershift mapping flags.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Almo7aya",
+  "homepage": "https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker#readme",
+  "bugs": {
+    "url": "https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/issues"
+  },
+  "keywords": ["razer", "synapse-web", "hypershift", "chrome-extension", "manifest-v3"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker.git"
+  },
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "check": "node tools/build.mjs --check",
+    "test": "node --test",
+    "package": "node tools/package.mjs"
+  }
+}

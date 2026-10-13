@@ -1,0 +1,36 @@
+name: Product compatibility report
+description: Report compatibility for any Razer product in Synapse Web.
+title: "[Product] "
+body:
+  - type: input
+    id: product
+    attributes:
+      label: Product name
+      placeholder: Razer Huntsman V3 Pro Mini or Razer Viper V4 Pro
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Extension and browser versions
+    validations:
+      required: true
+  - type: dropdown
+    id: result
+    attributes:
+      label: What was verified?
+      options:
+        - Source inspection only
+        - Browser mapping interface
+        - Browser interface and physical device output
+        - No matching flags; product works normally
+        - Not working
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Result and reproduction steps
+      description: Describe the mappings or buttons tested. Include the product-frame console status if available. Remove account details and device serial numbers.
+    validations:
+      required: true

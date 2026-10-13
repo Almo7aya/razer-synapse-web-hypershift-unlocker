@@ -1,0 +1,43 @@
+:root { color-scheme: dark; font-family: "Segoe UI", system-ui, sans-serif; background: #101615; color: #edf5f0; font-size: 13px; }
+* { box-sizing: border-box; }
+body { margin: 0; width: 380px; }
+main { padding: 22px; }
+header { display: flex; align-items: center; gap: 11px; }
+p, h1, h2 { margin: 0; }
+.eyebrow { color: #82dcb4; font-size: 9px; font-weight: 700; letter-spacing: 2px; }
+h1 { margin-top: 4px; font-size: 20px; font-weight: 650; letter-spacing: -.5px; }
+h2 { font-size: 12px; font-weight: 600; }
+.section-heading { display: flex; align-items: center; gap: 8px; margin: 18px 0 11px; }
+.count { padding: 2px 6px; border-radius: 4px; background: #27372f; color: #b5cabd; font-size: 10px; }
+button { font: inherit; cursor: pointer; }
+.icon-button { margin-left: auto; border: 0; border-radius: 6px; background: transparent; color: #b5cabd; font-size: 20px; width: 28px; height: 28px; line-height: 24px; }
+.icon-button:hover { background: #27372f; }
+#products { display: grid; gap: 9px; max-height: 310px; overflow-y: auto; }
+.product { display: flex; align-items: center; gap: 12px; padding: 14px 12px; border: 1px solid #2e3d35; background: #19221d; border-radius: 10px; }
+.thumbnail { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; }
+.product-info { flex: 1; min-width: 0; }
+.product-name { font-size: 12px; line-height: 1.45; font-weight: 600; overflow-wrap: anywhere; }
+.product-state { font-size: 10px; color: #9fb5a8; margin-top: 5px; }
+.switch { display: inline-flex; position: relative; flex-shrink: 0; }
+.switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.switch span { width: 34px; height: 20px; border-radius: 20px; background: #4a5950; pointer-events: none; transition: background .15s; }
+.switch span::after { content: ""; display: block; width: 14px; height: 14px; border-radius: 50%; margin: 3px; background: #eef7f2; transition: transform .15s; }
+.switch input:checked + span { background: #53bd88; }
+.switch input:checked + span::after { transform: translateX(14px); }
+.switch input:focus-visible + span { outline: 2px solid #b7f5d4; outline-offset: 3px; }
+.switch input:disabled + span { opacity: .45; }
+.notice { margin-top: 12px; font-size: 11px; line-height: 1.5; color: #b1d9bf; }
+.notice.error { color: #ffb3a8; }
+.empty { color: #a4b9ad; padding: 20px 5px; line-height: 1.6; }
+[hidden] { display: none !important; }
+dialog { width: calc(100% - 44px); max-width: 336px; padding: 22px; color: #edf5f0; background: #19221d; border: 1px solid #3b5144; border-radius: 12px; box-shadow: 0 12px 40px #0008; }
+dialog::backdrop { background: #060b09b8; }
+dialog h2 { font-size: 16px; }
+.dialog-actions { display: flex; gap: 10px; margin-top: 20px; }
+.dialog-actions button { flex: 1; padding: 10px; border-radius: 7px; font-size: 15px; font-weight: 650; }
+.reload { color: #0c291b; background: #82e0b1; border: 1px solid #82e0b1; }
+.reload:hover { background: #a0edc5; }
+.later { color: #d5e4dc; background: transparent; border: 1px solid #4a6152; }
+.later:hover { background: #27372f; }
+button:disabled { opacity: .4; cursor: default; }
+button:focus-visible, a:focus-visible { outline: 2px solid #b7f5d4; outline-offset: 3px; }
