@@ -51,9 +51,18 @@ npm run package
 ```
 
 The **Validate extension** Actions workflow runs on pull requests and pushes to
-`main`. It can also be triggered manually from the Actions tab. Use the
-[README's manual validation steps](README.md#manual-validation) when checking
-the extension in Synapse Web. Do not commit `saved_page/`, browser profiles,
-or build artifacts.
+`main`. It can also be triggered manually from the Actions tab. Do not commit
+`saved_page/`, browser profiles, or build artifacts.
+
+For manual validation, check product detection, sidebar icons, remembered
+toggles, both reload-overlay choices, and the dashboard shortcut from another
+site. Confirm that disabled products are skipped after reloading and products
+without matching flags still work normally. Check device output separately.
+
+Maintainers can start **Publish extension** manually from the Actions tab on
+`main`, choosing a patch, minor, or major version increment. The workflow
+validates, creates the version commit/tag and GitHub release ZIP, then submits
+the package to Chrome Web Store. Re-run the same workflow run to resume a
+partially completed release without another version bump.
 
 Contributions are licensed under the project's [MIT license](LICENSE).

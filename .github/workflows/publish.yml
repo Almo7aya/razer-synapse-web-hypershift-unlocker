@@ -1,0 +1,87 @@
+name: Publish extension
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version increment
+        type: choice
+        default: patch
+        options: [patch, minor, major]
+        required: true
+
+concurrency:
+  group: publish-extension
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: chrome-web-store
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      RELEASE_BUMP: ${{ inputs.bump }}
+      CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
+      CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
+    steps:
+      - name: Require main and publishing configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "::error::Run this workflow from main."
+            exit 1
+          fi
+          for name in CWS_PUBLISHER_ID CWS_EXTENSION_ID GCP_WORKLOAD_IDENTITY_PROVIDER GCP_SERVICE_ACCOUNT; do
+            if [[ -z "${!name}" ]]; then
+              echo "::error::Set the $name variable in the chrome-web-store environment."
+              exit 1
+            fi
+          done
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare version or resume this run's release
+        id: release
+        run: node tools/release.mjs prepare
+      - name: Validate and package
+        run: |
+          npm test
+          npm run check
+          npm run package
+      - name: Authenticate with Google
+        id: google
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/chromewebstore
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Check Chrome Web Store access and version
+        env:
+          CWS_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        run: node tools/publish-store.mjs preflight
+      - name: Commit version, tag, and create GitHub release with ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/release.mjs publish
+      - name: Upload release ZIP and submit to Chrome Web Store
+        env:
+          CWS_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        run: node tools/publish-store.mjs publish
