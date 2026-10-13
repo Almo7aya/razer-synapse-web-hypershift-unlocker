@@ -1,9 +1,7 @@
 # Privacy
 
-Razer Synapse Web Hypershift Unlocker saves product enable/disable choices in
-Chrome's local extension storage. It uses the product identifiers from Synapse
-iframe URLs to remember those choices. These preferences are not synced or sent
-to the developer.
+Hypershift Mapping Unlocker unlocks restricted Hypershift mappings in
+Razer Synapse Web.
 
 When you click the toolbar icon, the extension checks the active tab's Synapse
 Web URL locally. In the popup, it reads product iframe URLs,
@@ -23,7 +21,8 @@ locally for product discovery and mapping changes; they are not sent to the deve
 
 Permissions:
 
-- **storage:** remember product toggles locally.
+- **storage:** remember product preferences locally using identifiers from
+  Synapse iframe URLs. Preferences are not synced or sent to the developer.
 - **scripting:** register the bundled patch at page startup and read product
   display information when the popup is open.
 - **synapse.razer.com access:** discover products and apply the patch within
