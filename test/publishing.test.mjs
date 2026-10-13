@@ -1,5 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import { nextVersion, replaceVersion, compareVersions } from '../tools/version.mjs';
 import { createStoreClient, inspectStoreStatus, submitToStore } from '../tools/publish-store.mjs';
 
@@ -100,4 +105,28 @@ test('API failures do not print the access token', async () => {
         request: async () => new Response(JSON.stringify({ error: { message: 'Invalid private-token' } }), { status: 401 }),
     });
     await assert.rejects(client.status(), error => error.message.includes('401') && !error.message.includes('private-token'));
+});
+
+test('check command only reads store status and needs no release artifacts', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'store-access-check-'));
+    try {
+        const bootstrap = join(directory, 'fake-store.mjs');
+        const summary = join(directory, 'summary.md');
+        await writeFile(bootstrap, `
+            globalThis.fetch = async (url, options) => {
+                if ((options.method || 'GET') !== 'GET' || !url.endsWith(':fetchStatus')) throw new Error('Unexpected write request');
+                return new Response(JSON.stringify({ itemId: 'a'.repeat(32), lastAsyncUploadState: 'SUCCEEDED' }));
+            };
+        `);
+        const result = spawnSync(process.execPath, ['--import', pathToFileURL(bootstrap).href, fileURLToPath(new URL('../tools/publish-store.mjs', import.meta.url)), 'check'], {
+            cwd: directory,
+            encoding: 'utf8',
+            env: { ...process.env, CWS_PUBLISHER_ID: 'publisher', CWS_EXTENSION_ID: 'a'.repeat(32), CWS_ACCESS_TOKEN: 'private-test-token', GITHUB_STEP_SUMMARY: summary },
+        });
+        assert.equal(result.status, 0, result.stderr);
+        assert.match(result.stdout, /Chrome Web Store access confirmed/);
+        assert.match(result.stdout, /NOT_PUBLISHED/);
+        assert.equal((result.stdout + result.stderr).includes('private-test-token'), false);
+        assert.match(await readFile(summary, 'utf8'), /No version changes, uploads, or publication requested/);
+    } finally { await rm(directory, { recursive: true, force: true }); }
 });

@@ -60,9 +60,11 @@ site. Confirm that disabled products are skipped after reloading and products
 without matching flags still work normally. Check device output separately.
 
 Maintainers can start **Publish extension** manually from the Actions tab on
-`main`, choosing a patch, minor, or major version increment. The workflow
-validates, creates the version commit/tag and GitHub release ZIP, then submits
-the package to Chrome Web Store. Re-run the same workflow run to resume a
+`main`. The default **check** mode validates the package and checks Google
+authentication and Chrome Web Store access without changing versions or
+publishing. Choose **publish** and a patch, minor, or major version increment
+to create the version commit/tag and GitHub release ZIP, then submit the
+package to Chrome Web Store. Re-run the same workflow run to resume a
 partially completed release without another version bump.
 
 Contributions are licensed under the project's [MIT license](LICENSE).

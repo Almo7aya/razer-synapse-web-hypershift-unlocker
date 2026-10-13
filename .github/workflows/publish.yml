@@ -3,8 +3,14 @@ name: Publish extension
 on:
   workflow_dispatch:
     inputs:
+      mode:
+        description: Check access or publish a release
+        type: choice
+        default: check
+        options: [check, publish]
+        required: true
       bump:
-        description: Version increment
+        description: Version increment (publish mode only)
         type: choice
         default: patch
         options: [patch, minor, major]
@@ -26,6 +32,7 @@ jobs:
       contents: write
       id-token: write
     env:
+      RELEASE_MODE: ${{ inputs.mode }}
       RELEASE_BUMP: ${{ inputs.bump }}
       CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
       CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
@@ -38,6 +45,10 @@ jobs:
           set -euo pipefail
           if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
             echo "::error::Run this workflow from main."
+            exit 1
+          fi
+          if [[ "$RELEASE_MODE" != "check" && "$RELEASE_MODE" != "publish" ]]; then
+            echo "::error::Choose check or publish mode."
             exit 1
           fi
           for name in CWS_PUBLISHER_ID CWS_EXTENSION_ID GCP_WORKLOAD_IDENTITY_PROVIDER GCP_SERVICE_ACCOUNT; do
@@ -54,6 +65,7 @@ jobs:
         with:
           node-version: '22'
       - name: Prepare version or resume this run's release
+        if: inputs.mode == 'publish'
         id: release
         run: node tools/release.mjs prepare
       - name: Validate and package
@@ -71,16 +83,24 @@ jobs:
           access_token_scopes: https://www.googleapis.com/auth/chromewebstore
           create_credentials_file: false
           export_environment_variables: false
+      - name: Check authentication and Chrome Web Store access
+        if: inputs.mode == 'check'
+        env:
+          CWS_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: node tools/publish-store.mjs check
       - name: Check Chrome Web Store access and version
+        if: inputs.mode == 'publish'
         env:
           CWS_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
           RELEASE_VERSION: ${{ steps.release.outputs.version }}
         run: node tools/publish-store.mjs preflight
       - name: Commit version, tag, and create GitHub release with ZIP
+        if: inputs.mode == 'publish'
         env:
           GH_TOKEN: ${{ github.token }}
         run: node tools/release.mjs publish
       - name: Upload release ZIP and submit to Chrome Web Store
+        if: inputs.mode == 'publish'
         env:
           CWS_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
           RELEASE_VERSION: ${{ steps.release.outputs.version }}

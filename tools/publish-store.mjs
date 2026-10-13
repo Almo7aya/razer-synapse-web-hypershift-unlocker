@@ -79,25 +79,44 @@ export async function submitToStore({ client, version, zip, resume = false, wait
 }
 
 async function main() {
-    const version = process.env.RELEASE_VERSION;
-    const state = JSON.parse(await readFile('artifacts/release.json', 'utf8'));
-    if (state.version !== version || state.runId !== process.env.GITHUB_RUN_ID) throw new Error('Release state does not match this workflow run.');
+    const mode = process.argv[2];
+    if (!['check', 'preflight', 'publish'].includes(mode)) throw new Error('Expected check, preflight, or publish.');
     const client = createStoreClient({
         publisherId: process.env.CWS_PUBLISHER_ID,
         extensionId: process.env.CWS_EXTENSION_ID,
         token: process.env.CWS_ACCESS_TOKEN,
     });
-    if (process.argv[2] === 'preflight') {
+    if (mode === 'check') {
+        const status = await client.status();
+        const details = {
+            itemId: status.itemId || process.env.CWS_EXTENSION_ID,
+            published: status.publishedItemRevisionStatus?.state || 'NOT_PUBLISHED',
+            submitted: status.submittedItemRevisionStatus?.state || 'NOT_SUBMITTED',
+            lastUpload: status.lastAsyncUploadState || 'NONE',
+            takenDown: status.takenDown === true,
+            warned: status.warned === true,
+        };
+        console.log('Chrome Web Store access confirmed. No upload or publication requested.');
+        console.log(JSON.stringify(details, null, 2));
+        if (process.env.GITHUB_STEP_SUMMARY) {
+            await appendFile(process.env.GITHUB_STEP_SUMMARY, `Chrome Web Store access confirmed. No version changes, uploads, or publication requested.\n\n\`\`\`json\n${JSON.stringify(details, null, 2)}\n\`\`\`\n`);
+        }
+        return;
+    }
+    const version = process.env.RELEASE_VERSION;
+    const state = JSON.parse(await readFile('artifacts/release.json', 'utf8'));
+    if (state.version !== version || state.runId !== process.env.GITHUB_RUN_ID) throw new Error('Release state does not match this workflow run.');
+    if (mode === 'preflight') {
         const status = inspectStoreStatus(await client.status(), version, state.existing);
         console.log(`Chrome Web Store access confirmed; release status: ${status}.`);
-    } else if (process.argv[2] === 'publish') {
+    } else {
         const result = await submitToStore({
             client, version, resume: state.existing,
             zip: await readFile(`artifacts/${packageName(version)}`),
         });
         console.log(`Chrome Web Store ${version}: ${result}`);
         await appendFile(process.env.GITHUB_STEP_SUMMARY, `Chrome Web Store version **${version}**: **${result}**.\n\nSubmission success does not mean review has finished.\n`);
-    } else throw new Error('Expected preflight or publish.');
+    }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
