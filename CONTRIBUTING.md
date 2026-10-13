@@ -50,7 +50,8 @@ npm run check
 npm run package
 ```
 
-The **Validate extension** Actions workflow is manually triggered. Use the
+The **Validate extension** Actions workflow runs on pull requests and pushes to
+`main`. It can also be triggered manually from the Actions tab. Use the
 [README's manual validation steps](README.md#manual-validation) when checking
 the extension in Synapse Web. Do not commit `saved_page/`, browser profiles,
 or build artifacts.

@@ -112,9 +112,10 @@ license. `check` verifies generated files. `package`
 builds the extension and creates a ZIP in `artifacts/`. In environments that
 prohibit child processes, run `node --test --test-isolation=none` (Node 22.8+).
 
-The **Validate extension** GitHub Actions workflow runs only when manually
-started from the Actions tab. It runs unit tests, checks generated files, and
-uploads an extension ZIP. It does not perform browser or hardware validation.
+The **Validate extension** GitHub Actions workflow runs on pull requests and
+pushes to `main`, and can also be started manually from the Actions tab. It runs
+unit tests, checks generated files, and uploads an extension ZIP. It does not
+perform browser or hardware validation.
 
 The extension uses `storage` for local toggle preferences and `scripting` for
 startup registration and reading the current Synapse page's product information.
