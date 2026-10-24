@@ -2,6 +2,7 @@ node_modules/
 artifacts/
 saved_page/
 *.log
+hypershift-diagnostics-*.json
 .env
 .env.*
 .DS_Store

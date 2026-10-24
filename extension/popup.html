@@ -9,14 +9,20 @@
 </head>
 <body>
     <main hidden>
-        <header><img src="icons/48.png" width="38" height="38" alt=""><div><p class="eyebrow">FOR SYNAPSE WEB</p><h1>Hypershift Mapping Unlocker</h1></div></header>
+        <header><img src="icons/48.png" width="38" height="38" alt=""><div><p class="eyebrow">SYNAPSE WEB</p><h1>Hypershift Mapping Unlocker</h1></div></header>
+        <label class="mode-switch"><span>Developer mode</span><span class="switch"><input id="developer-mode" type="checkbox"><span></span></span></label>
+        <label class="mode-switch"><span>Experimental features</span><span class="switch"><input id="experimental-mode" type="checkbox"><span></span></span></label>
         <div class="section-heading"><h2>Products</h2><span id="count" class="count">0</span><button id="refresh" class="icon-button" type="button" aria-label="Refresh products" title="Refresh products">↻</button></div>
         <div id="products" aria-label="Detected products"></div>
         <p id="empty" class="empty">Loading products…</p>
+        <section id="developer-tools" hidden>
+            <button id="export-diagnostics" class="export-diagnostics" type="button">Export diagnostics</button>
+            <p class="experiment-help">Records Synapse Web console output and device reports locally. Exports may include profile and mapping details; review before sharing. Reload to start or stop recording.</p>
+        </section>
         <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
     </main>
     <dialog id="reload-dialog" aria-labelledby="reload-title">
-        <h2 id="reload-title">Reload to apply changes</h2>
+        <h2 id="reload-title">Reload Synapse Web to apply changes</h2>
         <div class="dialog-actions">
             <button id="reload" class="reload" type="button">Reload now</button>
             <button id="later" class="later" type="button">Later</button>

@@ -36,9 +36,11 @@ mappings still depend on the product and its firmware.
 
 ## Install
 
+Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/ndgdpnegngmfmlilocjefojfllclikhc),
+or load a release manually:
+
 1. Download the extension ZIP from [Releases](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/releases)
-   and extract it. Until a release is available, [download the source](https://github.com/Almo7aya/razer-synapse-web-hypershift-unlocker/archive/refs/heads/main.zip)
-   and use its `extension` folder.
+   and extract it.
 2. Open `chrome://extensions` and enable **Developer mode**.
 3. Click **Load unpacked** and select the extracted extension folder.
 4. Reload Synapse Web.
@@ -49,9 +51,19 @@ Open the extension from the toolbar while using Synapse Web. Products are
 enabled by default. Change a toggle, then choose **Reload now** or **Later**.
 Your choices take effect when Synapse reloads.
 
+**Experimental features** reveals optional features for supported products.
+Dual-purpose keys currently targets the Huntsman V3 Pro Mini and requires its
+own opt-in. Save changes one key's onboard tap behavior; use Synapse Web's
+normal mapping editor for its hold action. Support on other keys and firmware
+is not established. Saved mappings remain after disabling or uninstalling the
+extension; use **Restore original** first if you want to undo them.
+
+**Developer mode** provides console diagnostics and local JSON exports.
+Review exports before sharing them.
+
 ## Privacy
 
-Product preferences stay in local browser storage. The extension has no
+Preferences and mapping recovery backups stay in local browser storage. The extension has no
 analytics or external backend, and site access is limited to Synapse Web.
 See the [privacy policy](PRIVACY.md).
 

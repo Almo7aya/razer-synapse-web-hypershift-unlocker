@@ -1,21 +1,14 @@
 import './build.mjs';
-import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { crc32 } from './binary.mjs';
+import { EXTENSION_FILES } from './extension-files.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { version } = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
 const files = [];
-async function collect(directory, prefix = '') {
-    for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
-        if (entry.name.startsWith('.')) continue;
-        const name = `${prefix}${entry.name}`;
-        if (entry.isDirectory()) await collect(resolve(directory, entry.name), `${name}/`);
-        else if (entry.isFile()) files.push({ name, data: await readFile(resolve(directory, entry.name)) });
-    }
-}
-await collect(resolve(root, 'extension'));
+for (const name of EXTENSION_FILES) files.push({ name, data: await readFile(resolve(root, 'extension', name)) });
 const local = [], central = [];
 let offset = 0;
 for (const { name, data } of files) {
