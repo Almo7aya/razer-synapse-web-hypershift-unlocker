@@ -1,7 +1,12 @@
 # Razer Synapse Web Hypershift Unlocker
 
 <p align="center">
-  <img src="screenshots/01-hypershift-mapping.jpg" alt="Hypershift Mapping Unlocker showing controls for a Razer keyboard and mouse" width="800">
+  <img src="screenshots/01-product-controls.png" alt="Hypershift Mapping Unlocker's updated product controls, shown with example Razer keyboard and mouse devices" width="800">
+</p>
+
+<p align="center">
+  <a href="screenshots/02-dual-purpose-keys.png">Dual-purpose keys</a> ·
+  <a href="screenshots/03-developer-diagnostics.png">Developer diagnostics</a>
 </p>
 
 [![Install from Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Install-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/ndgdpnegngmfmlilocjefojfllclikhc)
